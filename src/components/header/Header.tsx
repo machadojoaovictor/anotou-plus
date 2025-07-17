@@ -11,7 +11,7 @@ export default function Header() {
                         </h1>
                     </Link>
                     <Link href={"/dashboard"}>
-                        <button className="text-lg text-on-light px-3.5 py-1.5 bg-secondary-background rounded-sm cursor-pointer">
+                        <button className="text-lg text-on-light px-3.5 py-1.5 bg-secondary-background rounded-sm cursor-pointer hover:scale-105 transition duration-150">
                             Meu painel
                         </button>
                     </Link>
