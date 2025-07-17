@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
+import Header from "@/components/header/Header";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 
 const font = Inter({
   subsets: ['latin'],
-  weight:['400', '700']
+  weight: ['400', '700']
 });
 
 export default function RootLayout({
@@ -24,6 +25,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br" className={font.className}>
       <body className="bg-secondary-background">
+        <Header />
         {children}
       </body>
     </html>
