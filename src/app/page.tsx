@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import heroImg from '../../public/images/hero.png';
 
-export default function Home() {
+export default function HomePage() {
   return (
     <main className="bg-primary-background w-full h-[calc(100vh-6rem)] flex flex-col gap-7 justify-center items-center">
       <div>
