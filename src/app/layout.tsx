@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 import Header from "@/components/header/Header";
-import { NextAuthProvider } from "./providers/NextAuthProvider";
+import { NextAuthProvider } from "./providers";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -25,12 +25,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br" className={font.className}>
-      <NextAuthProvider>
-        <body className="bg-secondary-background">
+      <body className="bg-secondary-background">
+        <NextAuthProvider>
           <Header />
           {children}
-        </body>
-      </NextAuthProvider>
+        </NextAuthProvider>
+      </body>
     </html>
   );
 }
