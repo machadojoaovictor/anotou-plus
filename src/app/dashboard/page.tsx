@@ -15,7 +15,7 @@ export default async function DashboardPage() {
                     <DashboardForm userId={user?.email} />
                 </div>
             </section>
-            <section className="">
+            <section>
                 <div className="mt-16 flex flex-col gap-8 ">
                     <h1 className="font-bold text-4xl text-center">Minhas tarefas</h1>
                     <TaskList userEmail={user?.email as string} />

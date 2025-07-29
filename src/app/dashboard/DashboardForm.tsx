@@ -3,7 +3,7 @@
 import Button from "@/components/button/Button";
 import Textarea from "@/components/textarea/Textarea";
 import { db } from "@/services/firebaseConnection";
-import { addDoc, collection} from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { ChangeEvent, FormEvent, useState } from "react";
 
 interface DashboardFormProps {
@@ -14,30 +14,6 @@ export default function DashboardForm({ userId }: DashboardFormProps) {
 
     const [input, setInput] = useState("");
     const [publicTask, setPublicTask] = useState(false);
-
-    function handleChangePublic(event: ChangeEvent<HTMLInputElement>) {
-        setPublicTask(event.target.checked);
-    }
-
-    async function handleRegisterTask(event: FormEvent) {
-        event.preventDefault();
-
-        if (input === "") return;
-
-        try {
-            await addDoc(collection(db, "tasks"), {
-                task: input,
-                created: new Date(),
-                user: userId,
-                public: publicTask
-            });
-
-            setInput("");
-            setPublicTask(false);
-        } catch (err) {
-            console.log(err)
-        }
-    }
 
     return (
         <form onSubmit={handleRegisterTask} className="text-on-light flex flex-col gap-4">
@@ -70,4 +46,28 @@ export default function DashboardForm({ userId }: DashboardFormProps) {
 
         </form>
     )
+
+    function handleChangePublic(event: ChangeEvent<HTMLInputElement>) {
+        setPublicTask(event.target.checked);
+    }
+
+    async function handleRegisterTask(event: FormEvent) {
+        event.preventDefault();
+
+        if (input === "") return;
+
+        try {
+            await addDoc(collection(db, "tasks"), {
+                task: input,
+                created: new Date(),
+                user: userId,
+                public: publicTask
+            });
+
+            setInput("");
+            setPublicTask(false);
+        } catch (err) {
+            console.log(err)
+        }
+    }
 }
