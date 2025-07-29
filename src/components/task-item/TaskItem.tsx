@@ -18,14 +18,6 @@ export default function TaskItem({ task, onDelete }: TaskItemProps) {
 
     const [hoveringTrash, setHoveringTrash] = useState(false);
 
-    async function handleDeleteTask(id: string) {
-        try {
-            await onDelete(id);
-        } catch (err) {
-            console.log(`Erro ao deletar tarefa: ${err}`);
-        }
-    }
-
     return (
         <div className={`w-full max-w-5xl border-2 rounded-lg flex items-center justify-between gap-10 p-5 ${hoveringTrash ? "border-red-300 transition duration-150" : "border-neutral-300"}`}>
             <div className="w-full flex flex-col gap-2.5">
@@ -58,4 +50,12 @@ export default function TaskItem({ task, onDelete }: TaskItemProps) {
             </button>
         </div>
     )
+
+    async function handleDeleteTask(id: string) {
+        try {
+            await onDelete(id);
+        } catch (err) {
+            console.log(`Erro ao deletar tarefa: ${err}`);
+        }
+    }
 }

@@ -1,11 +1,11 @@
 "use client";
 
-import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "@/services/firebaseConnection";
 import { useEffect, useState } from "react";
 import TaskItem from "../task-item/TaskItem";
 
-interface Task {
+interface TaskProps {
     id: string;
     text: string;
     public: boolean;
@@ -19,37 +19,30 @@ interface TaskListProps {
 
 export default function TaskList({ userEmail }: TaskListProps) {
 
-    const [tasks, setTasks] = useState<Task[]>([]);
+    const [tasks, setTasks] = useState<TaskProps[]>([]);
 
     useEffect(() => {
-        async function loadTasks() {
-            const tasksRef = collection(db, "tasks");
-            const q = query(tasksRef, where("user", "==", userEmail));
-            const snapshot = await getDocs(q);
-
-            const taskList = snapshot.docs.map(doc => {
-                const data = doc.data();
-
-                return {
-                    id: doc.id,
-                    text: data.task,
-                    public: data.public,
-                    created: data.created.toDate(),
-                    user: data.user,
-                };
-            });
+        const tasksRef = collection(db, "tasks");
+        const q = query(tasksRef, where("user", "==", userEmail));
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const taskList = snapshot.docs.map(doc => ({
+                id: doc.id,
+                text: doc.data().task,
+                public: doc.data().public,
+                created: doc.data().created.toDate(),
+                user: doc.data().user,
+            }));
 
             setTasks(taskList);
-        }
+        });
 
-        loadTasks();
+        return () => unsubscribe();
     }, [userEmail]);
 
     return (
         <div className="flex flex-col gap-4 items-center">
             {
                 (tasks.length < 1) ?
-
                     <p>Não há tarefas cadastradas</p>
                     :
                     tasks.map(task => (
