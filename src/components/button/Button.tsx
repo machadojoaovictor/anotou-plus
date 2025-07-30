@@ -10,7 +10,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export default function Button({ children, href, className, ...rest }: ButtonProps) {
-    const baseStyle = 'py-3.5 border-2 rounded-lg cursor-pointer transition duration-150 font-bold hover:opacity-90 active:opacity-85';
+    const baseStyle = 'py-3.5 border-2 cursor-pointer transition duration-150 font-bold hover:opacity-90 active:opacity-85';
 
     return (
         href ?

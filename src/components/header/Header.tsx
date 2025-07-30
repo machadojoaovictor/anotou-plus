@@ -38,18 +38,15 @@ export default function Header() {
                     ) : session ? (
                         <Button
                             onClick={() => signOut()}
-                            variant="primary"
-                            size="md"
-                            rounded="full"
+                            className="border-on-dark text-on-dark font-medium px-10 rounded-full"
                         >
-                            Olá, {firstName}
+                            {`Olá, ${firstName}`}
                         </Button>
                     ) : (
                         <Button
                             onClick={() => signIn("google")}
-                            variant="primary"
-                            size="md"
-                            rounded="full"
+                            className="border-on-dark text-on-dark font-medium px-10 rounded-full"
+
                         >
                             Minha conta
                         </Button>
