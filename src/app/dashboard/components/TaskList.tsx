@@ -3,7 +3,8 @@
 import { collection, deleteDoc, doc, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "@/services/firebaseConnection";
 import { useEffect, useState } from "react";
-import TaskItem from "../task-item/TaskItem";
+import TaskItem from "./TaskItem";
+
 
 interface TaskProps {
     id: string;
