@@ -1,6 +1,14 @@
-import DashboardForm from "./DashboardForm";
+import DashboardForm from "./components/DashboardForm";
 import { auth } from "@/auth";
-import TaskList from "@/components/task-list/TaskList";
+import TaskList from "./components/TaskList";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Dashboard",
+    icons: {
+        icon: '/icons/favicon.ico'
+    }
+}
 
 export default async function DashboardPage() {
 
