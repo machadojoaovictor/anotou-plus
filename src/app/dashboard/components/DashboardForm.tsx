@@ -40,7 +40,9 @@ export default function DashboardForm({ userId }: DashboardFormProps) {
                 <span className="text-on-dark font-normal">Deixar tarefa pública</span>
             </label>
 
-            <Button className="bg-blue-500 text-on-dark border-blue-500">
+            <Button
+                variant="default"
+            >
                 Registrar
             </Button>
 

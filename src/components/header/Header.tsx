@@ -22,11 +22,12 @@ export default function Header() {
 
                     {
                         session?.user && (
-                            <Link href={"/dashboard"}>
-                                <button className="text-lg text-on-light px-3.5 py-1.5 bg-secondary-background rounded-sm cursor-pointer hover:scale-105 transition duration-150">
-                                    Meu painel
-                                </button>
-                            </Link>
+                            <Button
+                                href={"/dashboard"}
+                                variant="primary"
+                            >
+                                Meu painel
+                            </Button>
                         )
                     }
 
@@ -38,15 +39,14 @@ export default function Header() {
                     ) : session ? (
                         <Button
                             onClick={() => signOut()}
-                            className="border-on-dark text-on-dark font-medium px-10 rounded-full"
+                            variant="outlineDark"
                         >
                             {`Olá, ${firstName}`}
                         </Button>
                     ) : (
                         <Button
                             onClick={() => signIn("google")}
-                            className="border-on-dark text-on-dark font-medium px-10 rounded-full"
-
+                            variant="outlineDark"
                         >
                             Minha conta
                         </Button>
