@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import heroImg from '../../public/images/hero.png';
+import Button from "@/components/button/Button";
 
 export default function HomePage() {
   return (
@@ -14,10 +15,16 @@ export default function HomePage() {
         />
       </div>
 
-      <h1 className="text-on-dark font-bold text-4xl text-center leading-normal">
-        Sistema feito para você organizar <br />
-        seus estudos e tarefas
-      </h1>
+      <div className="flex flex-col gap-14">
+        <h1 className="text-on-dark font-bold text-4xl text-center leading-normal">
+          Sistema feito para você organizar <br />
+          seus estudos e tarefas
+        </h1>
+        <div className="flex items-center justify-center gap-4">
+          <span className="bg-secondary-background text-on-light px-16 py-3.5 font-bold rounded-2xl">+ 7 mil posts</span>
+          <span className="bg-secondary-background text-on-light px-16 py-3.5 font-bold rounded-2xl">+ 1 mil comentários</span>
+        </div>
+      </div>
     </main>
   );
 }
