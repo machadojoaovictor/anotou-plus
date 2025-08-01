@@ -1,7 +1,6 @@
 import Image from "next/image";
 
 import heroImg from '../../public/images/hero.png';
-import Button from "@/components/button/Button";
 
 export default function HomePage() {
   return (

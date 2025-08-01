@@ -2,6 +2,7 @@
 
 import { FaTrashAlt } from "react-icons/fa";
 import { useState } from "react";
+import Link from "next/link";
 
 interface TaskItemProps {
     task: {
@@ -24,11 +25,12 @@ export default function TaskItem({ task, onDelete }: TaskItemProps) {
 
                 {
                     task.public && (
-                        <span
+                        <Link
+                            href={`/task/${task.id}`}
                             className="self-start px-2.5 py-1.5 bg-blue-500 text-on-dark text-xs font-semibold uppercase rounded-sm text-justify"
                         >
                             Pública
-                        </span>
+                        </Link>
                     )
                 }
 
