@@ -22,9 +22,8 @@ export default function TaskList({ user }: TaskListProps) {
             return;
         }
 
-
         const tasksRef = collection(db, "tasks");
-        const q = query(tasksRef, where("user", "==", user.id));
+        const q = query(tasksRef, where("user", "==", user));
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const taskList = snapshot.docs.map(doc => ({
                 id: doc.id,
@@ -47,7 +46,7 @@ export default function TaskList({ user }: TaskListProps) {
                     <p>Não há tarefas cadastradas</p>
                     :
                     tasks.map(task => (
-                        <TaskItem key={task.id} {...task} />
+                        <TaskItem key={task.id} task={task} />
                     ))
             }
         </div>

@@ -63,7 +63,7 @@ export default function DashboardForm({ user }: DashboardFormProps) {
                 text: input,
                 isPublic: isPublic,
                 created: new Date(),
-                user: user.id,
+                user: user,
             });
 
             setInput("");

@@ -7,9 +7,11 @@ import { Task } from "@/types/Task";
 import { db } from "@/services/firebaseConnection";
 import { deleteDoc, doc } from "firebase/firestore";
 
-interface TaskItemProps extends Pick<Task, 'id' | 'text' | 'isPublic'> { }
+interface TaskItemProps {
+    task: Task;
+}
 
-export default function TaskItem({ id, text, isPublic }: TaskItemProps) {
+export default function TaskItem({ task: { id, isPublic, text } }: TaskItemProps) {
 
     const [hoveringTrash, setHoveringTrash] = useState(false);
 
