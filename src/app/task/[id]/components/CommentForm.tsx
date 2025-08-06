@@ -3,6 +3,7 @@
 import Textarea from "@/components/textarea/Textarea"
 import { db } from "@/services/firebaseConnection";
 import { Task } from "@/types/Task";
+import { User } from "@/types/User";
 import clsx from "clsx";
 import { addDoc, collection } from "firebase/firestore";
 import { useSession } from "next-auth/react"
@@ -10,9 +11,10 @@ import { ChangeEvent, FormEvent, useState } from "react";
 
 interface CommentFormProps {
     task: Task;
+    user: User;
 }
 
-export default function CommentForm({ task }: CommentFormProps) {
+export default function CommentForm({ task, user }: CommentFormProps) {
 
     const { data: session } = useSession();
     const isDisabled = !session?.user;
@@ -53,9 +55,8 @@ export default function CommentForm({ task }: CommentFormProps) {
             await addDoc(collection(db, "comments"), {
                 text: input,
                 created: new Date(),
-                user: session.user.email,
-                name: session.user.name,
-                task: task.id
+                user: user,
+                task: task
             })
 
             setInput("");

@@ -17,13 +17,8 @@ export default function TaskList({ user }: TaskListProps) {
 
     useEffect(() => {
 
-        if (!user || !user.id) {
-            // Impede a consulta se o user ou user.id for nulo ou indefinido
-            return;
-        }
-
         const tasksRef = collection(db, "tasks");
-        const q = query(tasksRef, where("user", "==", user));
+        const q = query(tasksRef, where("user.id", "==", user.id));
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const taskList = snapshot.docs.map(doc => ({
                 id: doc.id,

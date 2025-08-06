@@ -5,6 +5,7 @@ import { Task } from "@/types/Task";
 import { Comment } from "@/types/Comment";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import CommentItem from "./CommentItem";
 
 interface CommentListProps {
     task: Task;
@@ -16,7 +17,7 @@ export default function CommentList({ task }: CommentListProps) {
 
     useEffect(() => {
         const commentsRef = collection(db, "comments");
-        const q = query(commentsRef, where("task", "==", task.id))
+        const q = query(commentsRef, where("task", "==", task))
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const commentList = snapshot.docs.map(doc => ({
                 id: doc.id,
@@ -40,9 +41,7 @@ export default function CommentList({ task }: CommentListProps) {
                     <p>Não há comentários cadastrados</p>
                     :
                     comments.map(comment => (
-                        <p key={comment.id}>
-                            {comment.text}
-                        </p>
+                        <CommentItem key={comment.id} comment={comment} />
                     ))
             }
         </div>
