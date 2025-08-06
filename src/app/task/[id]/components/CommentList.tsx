@@ -1,29 +1,22 @@
 "use client"
 
 import { db } from "@/services/firebaseConnection";
+import { Task } from "@/types/Task";
+import { TaskComment } from "@/types/TaskComment";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
-interface CommentProps {
-    id: string;
-    text: string;
-    created: Date;
-    user: string;
-    userName: string;
-    taskId: string;
-}
-
 interface CommentListProps {
-    taskId: string;
+    task: Task;
 }
 
-export default function CommentList({ taskId }: CommentListProps) {
+export default function CommentList({ task }: CommentListProps) {
 
-    const [comments, setComments] = useState<CommentProps[]>([]);
+    const [comments, setComments] = useState<TaskComment[]>([]);
 
     useEffect(() => {
         const commentsRef = collection(db, "comments");
-        const q = query(commentsRef, where("taskId", "==", taskId))
+        const q = query(commentsRef, where("task", "==", task.id))
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const commentList = snapshot.docs.map(doc => ({
                 id: doc.id,
@@ -31,14 +24,14 @@ export default function CommentList({ taskId }: CommentListProps) {
                 created: doc.data().created.toDate(),
                 user: doc.data().user,
                 userName: doc.data().name,
-                taskId: doc.data().taskId
+                task: doc.data().task,
             }));
 
             setComments(commentList);
         });
 
         return () => unsubscribe();
-    })
+    }, [task.id])
 
     return (
         <div className="flex flex-col gap-4 items-center">
@@ -47,7 +40,9 @@ export default function CommentList({ taskId }: CommentListProps) {
                     <p>Não há comentários cadastrados</p>
                     :
                     comments.map(comment => (
-                        <p>{comment.text}</p>
+                        <p key={comment.id}>
+                            {comment.text}
+                            </p>
                     ))
             }
         </div>

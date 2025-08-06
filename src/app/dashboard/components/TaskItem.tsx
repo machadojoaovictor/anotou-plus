@@ -3,19 +3,13 @@
 import { FaTrashAlt } from "react-icons/fa";
 import { useState } from "react";
 import Link from "next/link";
+import { Task } from "@/types/Task";
+import { db } from "@/services/firebaseConnection";
+import { deleteDoc, doc } from "firebase/firestore";
 
-interface TaskItemProps {
-    task: {
-        id: string;
-        text: string;
-        public: boolean;
-        created: Date;
-        user: string;
-    };
-    onDelete: (id: string) => void;
-}
+interface TaskItemProps extends Pick<Task, 'id' | 'text' | 'isPublic'> { }
 
-export default function TaskItem({ task, onDelete }: TaskItemProps) {
+export default function TaskItem({ id, text, isPublic }: TaskItemProps) {
 
     const [hoveringTrash, setHoveringTrash] = useState(false);
 
@@ -24,9 +18,9 @@ export default function TaskItem({ task, onDelete }: TaskItemProps) {
             <div className="w-full flex flex-col gap-2.5">
 
                 {
-                    task.public && (
+                    isPublic && (
                         <Link
-                            href={`/task/${task.id}`}
+                            href={`/task/${id}`}
                             className="self-start px-2.5 py-1.5 bg-blue-500 text-on-dark text-xs font-semibold uppercase rounded-sm text-justify"
                         >
                             Pública
@@ -35,14 +29,14 @@ export default function TaskItem({ task, onDelete }: TaskItemProps) {
                 }
 
                 <p className="max-h-16 overflow-y-auto break-words text-justify pr-3">
-                    {task.text}
+                    {text}
                 </p>
 
             </div>
             <button
                 onMouseEnter={() => setHoveringTrash(true)}
                 onMouseLeave={() => setHoveringTrash(false)}
-                onClick={() => handleDeleteTask(task.id)}
+                onClick={() => handleDeleteTask(id)}
                 aria-label="Deletar tarefa"
             >
                 <FaTrashAlt
@@ -55,7 +49,7 @@ export default function TaskItem({ task, onDelete }: TaskItemProps) {
 
     async function handleDeleteTask(id: string) {
         try {
-            await onDelete(id);
+            await deleteDoc(doc(db, "tasks", id));
         } catch (err) {
             console.log(`Erro ao deletar tarefa: ${err}`);
         }
