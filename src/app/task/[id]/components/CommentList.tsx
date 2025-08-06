@@ -2,7 +2,7 @@
 
 import { db } from "@/services/firebaseConnection";
 import { Task } from "@/types/Task";
-import { TaskComment } from "@/types/TaskComment";
+import { Comment } from "@/types/Comment";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
@@ -12,7 +12,7 @@ interface CommentListProps {
 
 export default function CommentList({ task }: CommentListProps) {
 
-    const [comments, setComments] = useState<TaskComment[]>([]);
+    const [comments, setComments] = useState<Comment[]>([]);
 
     useEffect(() => {
         const commentsRef = collection(db, "comments");
@@ -42,7 +42,7 @@ export default function CommentList({ task }: CommentListProps) {
                     comments.map(comment => (
                         <p key={comment.id}>
                             {comment.text}
-                            </p>
+                        </p>
                     ))
             }
         </div>

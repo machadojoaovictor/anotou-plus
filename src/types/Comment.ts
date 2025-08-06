@@ -1,6 +1,6 @@
 import { Task } from "@/types/Task";
 
-export type TaskComment = {
+export type Comment = {
   id: string;
   text: string;
   created: Date;
