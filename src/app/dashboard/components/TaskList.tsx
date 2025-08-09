@@ -18,7 +18,8 @@ export default function TaskList({ user }: TaskListProps) {
     useEffect(() => {
 
         const tasksRef = collection(db, "tasks");
-        const q = query(tasksRef, where("user.id", "==", user.id));
+        const q = query(tasksRef, where("user.email", "==", user.email));
+
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const taskList = snapshot.docs.map(doc => ({
                 id: doc.id,
@@ -32,7 +33,7 @@ export default function TaskList({ user }: TaskListProps) {
         });
 
         return () => unsubscribe();
-    }, [user]);
+    }, [user.email]);
 
     return (
         <div className="flex flex-col gap-4 items-center">

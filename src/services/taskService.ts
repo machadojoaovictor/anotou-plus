@@ -12,7 +12,7 @@ export async function getTaskById(id: string): Promise<Task | null> {
 
   return {
     id: docSnap.id,
-    text: data.task,
+    text: data.text,
     isPublic: data.isPublic,
     created: data.created.toDate(),
     user: data.user,
