@@ -25,32 +25,36 @@ export default async function TaskPage({ params }: TaskPageProps) {
     const user = session?.user;
 
     return (
-        <main className="w-full flex flex-col justify-center items-center">
-            <h1 className="mt-8 text-center font-bold text-4xl">
-                Detalhes da tarefa
-            </h1>
-            <section className="w-full px-5 py-8 max-w-5xl flex flex-col gap-3.5 justify-center">
-                <h2 className="font-bold text-2xl text-on-light">
-                    Tarefa
-                </h2>
-                <div className="w-full max-w-5xl max-h-48 p-6 border-2 border-[#909090] rounded-lg">
-                    <p>
-                        {task?.text}
-                    </p>
+        <main className="flex flex-col items-center">
+            <div className="w-full max-w-5xl py-11">
+                <h1 className="text-center font-bold text-4xl">
+                    Detalhes da tarefa
+                </h1>
+                <div className="flex flex-col gap-14">
+                    <section className="flex flex-col gap-3.5">
+                        <h2 className="font-bold text-2xl text-on-light">
+                            Tarefa
+                        </h2>
+                        <div className="flex items-center gap-1.5">
+                            <p className="text-lg text-neutral-600 font-bold">
+                                {task?.text}
+                            </p>
+                        </div>
+                    </section>
+                    <section className="flex flex-col gap-3.5">
+                        <h2 className="font-bold text-2xl text-on-light">
+                            Deixar comentário
+                        </h2>
+                        <CommentForm task={task as Task} user={user as User} />
+                    </section>
+                    <section className="flex flex-col gap-3.5">
+                        <h2 className="font-bold text-2xl text-on-light">
+                            Todos comentários
+                        </h2>
+                        <CommentList task={task as Task} />
+                    </section>
                 </div>
-            </section>
-            <section className="w-full px-5 py-8 max-w-5xl flex flex-col gap-3.5 justify-center">
-                <h2 className="font-bold text-2xl text-on-light">
-                    Deixar comentário
-                </h2>
-                <CommentForm task={task as Task} user={user as User} />
-            </section>
-            <section className="w-full px-5 py-8 max-w-5xl flex flex-col gap-3.5 justify-center">
-                <h2 className="font-bold text-2xl text-on-light">
-                    Comentários
-                </h2>
-                <CommentList task={task as Task} />
-            </section>
+            </div>
         </main>
     )
 }

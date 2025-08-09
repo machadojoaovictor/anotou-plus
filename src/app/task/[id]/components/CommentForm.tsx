@@ -23,12 +23,13 @@ export default function CommentForm({ task, user }: CommentFormProps) {
     return (
         <form
             onSubmit={handleRegisterComment}
+            className="flex flex-col gap-6"
         >
             <Textarea
                 value={input}
                 onChange={(event: ChangeEvent<HTMLTextAreaElement>) => setInput(event.target.value)}
                 placeholder="Digite seu comentário"
-                className="w-full max-w-5xl max-h-48 p-6 border-2 border-[#909090] rounded-lg"
+                className="w-full max-w-5xl max-h-48 p-6 border-1 border-[#909090] rounded-lg"
             />
             <button
                 disabled={isDisabled}
