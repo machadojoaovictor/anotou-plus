@@ -38,7 +38,7 @@ export default function CommentList({ task }: CommentListProps) {
         <div className="flex flex-col gap-4 items-center">
             {
                 (comments.length < 1) ?
-                    <p>Não há comentários cadastrados</p>
+                    <p className="opacity-70">Não há comentários cadastrados</p>
                     :
                     comments.map(comment => (
                         <CommentItem key={comment.id} comment={comment} />
