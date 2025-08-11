@@ -1,14 +1,16 @@
 import { db } from "@/services/firebaseConnection";
 import { Comment } from "@/types/Comment"
+import { Task } from "@/types/Task";
 import { deleteDoc, doc } from "firebase/firestore";
 import { useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 
 interface CommentItemProps {
     comment: Comment;
+    task: Task;
 }
 
-export default function CommentItem({ comment: { id, text, user } }: CommentItemProps) {
+export default function CommentItem({ comment, task }: CommentItemProps) {
 
     const [hoveringTrash, setHoveringTrash] = useState(false);
 
@@ -17,16 +19,16 @@ export default function CommentItem({ comment: { id, text, user } }: CommentItem
             <div className={`flex justify-between gap-1.5 p-4 rounded-lg border-1 ${hoveringTrash ? "border-red-300 transition duration-150" : "border-neutral-300"}`}>
                 <div className="flex flex-col gap-1.5">
                     <span className=" bg-[#CCCCCC] rounded-sm p-1.5 text-sm self-start">
-                        {user.name}
+                        {comment.user.name}
                     </span>
                     <p>
-                        {text}
+                        {comment.text}
                     </p>
                 </div>
                 <button
                     onMouseEnter={() => setHoveringTrash(true)}
                     onMouseLeave={() => setHoveringTrash(false)}
-                    onClick={() => handleDeleteComment(id)}
+                    onClick={() => handleDeleteComment(comment, task)}
                     aria-label="Deletar comentário"
                 >
                     <FaTrashAlt
@@ -38,9 +40,10 @@ export default function CommentItem({ comment: { id, text, user } }: CommentItem
         </div>
     )
 
-    async function handleDeleteComment(id: string) {
+    async function handleDeleteComment(comment: Comment, task: Task,) {
         try {
-            await deleteDoc(doc(db, "comments", id));
+            const commentRef = doc(db, "tasks", task.id, "comments", comment.id)
+            deleteDoc(commentRef);
         } catch (err) {
             console.log(`Erro ao deletar tarefa: ${err}`);
         }

@@ -7,11 +7,11 @@ import { User } from "@/types/User";
 import { addDoc, collection } from "firebase/firestore";
 import { ChangeEvent, FormEvent, useState } from "react";
 
-interface DashboardFormProps {
+interface TaskFormProps {
     user: User;
 }
 
-export default function DashboardForm({ user }: DashboardFormProps) {
+export default function TaskForm({ user }: TaskFormProps) {
 
     const [input, setInput] = useState("");
     const [isPublic, setIsPublic] = useState(false);
@@ -62,8 +62,8 @@ export default function DashboardForm({ user }: DashboardFormProps) {
             await addDoc(collection(db, "tasks"), {
                 text: input,
                 isPublic: isPublic,
-                created: new Date(),
-                user: user,
+                createdAt: new Date(),
+                user: user
             });
 
             setInput("");

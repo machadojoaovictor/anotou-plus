@@ -53,11 +53,10 @@ export default function CommentForm({ task, user }: CommentFormProps) {
         if (!session?.user.email || !session.user.name) return;
 
         try {
-            await addDoc(collection(db, "comments"), {
+            await addDoc(collection(db,"tasks", task.id, "comments"), {
                 text: input,
-                created: new Date(),
-                user: user,
-                task: task
+                createdAt: new Date(),
+                user: user
             })
 
             setInput("");

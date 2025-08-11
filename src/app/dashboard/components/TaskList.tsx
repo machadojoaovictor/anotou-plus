@@ -1,6 +1,6 @@
 "use client";
 
-import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import { db } from "@/services/firebaseConnection";
 import { useEffect, useState } from "react";
 import TaskItem from "./TaskItem";
@@ -16,19 +16,15 @@ export default function TaskList({ user }: TaskListProps) {
     const [tasks, setTasks] = useState<Task[]>([]);
 
     useEffect(() => {
-
         const tasksRef = collection(db, "tasks");
-        const q = query(tasksRef, where("user.email", "==", user.email));
+        const q = query(tasksRef, orderBy("createdAt", "desc"), where("user.email", "==", user.email));
 
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const taskList = snapshot.docs.map(doc => ({
                 id: doc.id,
-                text: doc.data().text,
-                isPublic: doc.data().isPublic,
-                created: doc.data().created.toDate(),
-                user: doc.data().user,
-            }));
-
+                ...doc.data()
+            })) as Task[];
+            console.log(taskList)
             setTasks(taskList);
         });
 
@@ -39,10 +35,17 @@ export default function TaskList({ user }: TaskListProps) {
         <div className="flex flex-col gap-4 items-center">
             {
                 (tasks.length < 1) ?
-                    <p>Não há tarefas cadastradas</p>
+                    <p
+                        className="opacity-70"
+                    >
+                        Não há tarefas cadastradas
+                    </p>
                     :
                     tasks.map(task => (
-                        <TaskItem key={task.id} task={task} />
+                        <TaskItem
+                            key={task.id}
+                            task={task}
+                        />
                     ))
             }
         </div>

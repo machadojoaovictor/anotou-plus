@@ -5,7 +5,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Task } from "@/types/Task";
 import { db } from "@/services/firebaseConnection";
-import { deleteDoc, doc } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
 
 interface TaskItemProps {
     task: Task;
@@ -51,7 +51,21 @@ export default function TaskItem({ task: { id, isPublic, text } }: TaskItemProps
 
     async function handleDeleteTask(id: string) {
         try {
-            await deleteDoc(doc(db, "tasks", id));
+
+            const taskRef = doc(db, "tasks", id);
+            await deleteDoc(taskRef);
+
+            const commentsRef = collection(db, "comments");
+            const qComments = query(commentsRef, where("task.id", "==", id));
+            const commentsSnapshot = await getDocs(qComments);
+
+            const deletePromises = commentsSnapshot.docs.map((document) => {
+                const commentDocRef = doc(db, "comments", document.id);
+                return deleteDoc(commentDocRef);
+            });
+
+            await Promise.all(deletePromises);
+
         } catch (err) {
             console.log(`Erro ao deletar tarefa: ${err}`);
         }
