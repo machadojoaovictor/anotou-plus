@@ -5,8 +5,7 @@ import { NextResponse } from "next/server";
 export default auth(async (request: NextRequest) => {
   const { pathname } = request.nextUrl;
 
-  const publicRoutes = ["/"];
-  const isPublicRoute = publicRoutes.includes(pathname);
+  const isPublicRoute = pathname === "/" || pathname.startsWith("/task/");
 
   const isAuthenticated = !!request.auth;
 
