@@ -5,6 +5,7 @@ import { Task } from "@/types/Task";
 import { User } from "@/types/User";
 import { getTaskById } from "@/services/taskService";
 import { auth } from "@/auth";
+import { notFound } from "next/navigation";
 
 export const metadata: Metadata = {
     title: "Detalhes da Tarefa"
@@ -18,8 +19,12 @@ interface TaskPageProps {
 
 export default async function TaskPage({ params }: TaskPageProps) {
 
-    const { id } = params;
-    const task = await getTaskById(id);
+    const taskId = await params.id;
+    const task = await getTaskById(taskId);
+
+    if (!task) {
+        return notFound();
+    }
 
     const session = await auth();
     const user = session?.user;
@@ -45,13 +50,13 @@ export default async function TaskPage({ params }: TaskPageProps) {
                         <h2 className="font-bold text-2xl text-on-light">
                             Deixar comentário
                         </h2>
-                        <CommentForm task={task as Task} user={user as User} />
+                        <CommentForm task={task} user={user as User} />
                     </section>
                     <section className="flex flex-col gap-3.5">
                         <h2 className="font-bold text-2xl text-on-light">
                             Todos comentários
                         </h2>
-                        <CommentList task={task as Task} />
+                        <CommentList task={task} />
                     </section>
                 </div>
             </div>
