@@ -4,7 +4,7 @@ import { User } from "@/types/User";
 export type Comment = {
   id: string;
   text: string;
-  created: Date;
+  createdAt: Date;
   user: User;
   task: Task;
 };
