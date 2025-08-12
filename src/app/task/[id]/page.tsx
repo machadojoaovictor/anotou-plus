@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import CommentForm from "./components/CommentForm";
 import CommentList from "./components/CommentList";
-import { Task } from "@/types/Task";
 import { User } from "@/types/User";
 import { getTaskById } from "@/services/taskService";
 import { auth } from "@/auth";
