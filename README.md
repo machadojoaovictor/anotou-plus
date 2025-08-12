@@ -1,5 +1,3 @@
-[PROJECT__URL]: 
-
 <h1 align="center" style="font-weight: bold;">Anotou<span style="color:red;">+</span></h1>
 
 <p align="center">
