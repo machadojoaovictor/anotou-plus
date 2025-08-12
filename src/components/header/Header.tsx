@@ -16,7 +16,7 @@ export default function Header() {
                 <nav className="flex gap-6 justify-center items-center">
                     <Link href={"/"}>
                         <h1 className="text-on-dark font-bold text-4xl">
-                            Anotou<span className="text-red-600 pl-0.5">!</span>
+                            Anotou<span className="text-red-600 pl-0.5">+</span>
                         </h1>
                     </Link>
 
